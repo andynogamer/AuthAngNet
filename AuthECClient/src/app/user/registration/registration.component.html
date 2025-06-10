@@ -1,0 +1,56 @@
+<div class="mb-4 h2 text-success">
+    Sign up
+</div>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="mb-3">
+        <input placeholder="Full Name" 
+        class="form-control bg-body-secondary" formControlName="fullName">
+        <div class="error-feedback" *ngIf="hasDisplayableError('fullName') && form.get('fullName')?.hasError('required')">
+            Please enter your full name.
+        </div>
+    </div>
+    <div class="mb-3">
+        <input placeholder="Email" 
+        class="form-control bg-body-secondary" formControlName="email">
+        <div class="error-feedback" *ngIf="hasDisplayableError('email')">
+            <div *ngIf="form.get('email')?.hasError('required')">
+                Please enter your email address.
+            </div>
+            <div *ngIf="form.get('email')?.hasError('email')">
+                Please enter a valid email address.
+            </div>
+            
+        </div>
+    </div>
+    <div class="mb-3">
+        <input placeholder="Password" 
+        class="form-control bg-body-secondary" formControlName="password">
+        
+        <div class="error-feedback" *ngIf="hasDisplayableError('password')">
+            <ng-container [ngSwitch]="form.get('password')?.errors | firstKey">
+                <div *ngSwitchCase="'required'">
+                Please enter your password.
+                </div>
+                <div *ngSwitchCase="'minlength'">
+                    Atleast 6 characters required.
+                </div>
+                <div *ngSwitchCase="'pattern'">
+                    One or more special character(s).
+                </div>
+            </ng-container>
+            
+            
+        </div>
+    </div>
+    <div class="mb-3">
+        <input placeholder="Confirm Password" 
+        class="form-control bg-body-secondary" 
+        formControlName="confirmPassword">
+        <div class="error-feedback" *ngIf="hasDisplayableError('confirmPassword') && form.get('confirmPassword')?.hasError('passwordMismatch')">
+            Password doesn't match.
+        </div>
+    </div>
+    <div class="mb-4">
+        <button class="btn btn-success w-100 rounded-3" type="submit">Register</button>
+    </div>
+</form>
